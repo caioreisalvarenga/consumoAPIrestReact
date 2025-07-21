@@ -1,3 +1,4 @@
+import './Table.css';
 
 interface Viagem {
   id: number;
@@ -8,9 +9,51 @@ interface Viagem {
 
 interface TableProps {
   viagens: Viagem[];
+  erro: string | null;
+  loading: boolean;
 }
 
-export default function Table({ viagens }: TableProps) {
+export default function Table({ viagens, erro, loading }: TableProps) {
+  if (loading) {
+    return (
+      <div className="text-center my-4">
+        <table className="table table-bordered">
+          <tbody>
+            <tr>
+              <td colSpan={4}>Carregando...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  if (erro) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        <table className="table table-bordered">
+          <tbody>
+            <tr>
+              <td colSpan={4}>{erro}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  if (viagens.length === 0) {
+    return (
+      <table className="table table-bordered">
+        <tbody>
+          <tr>
+            <td colSpan={4}>Nenhuma viagem encontrada</td>
+          </tr>
+        </tbody>
+      </table>
+    );
+  }
+
   return (
     <table className="table table-bordered">
       <thead className="table-light">

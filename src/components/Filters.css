@@ -1,0 +1,52 @@
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.filter-item {
+    flex-basis: calc(33.33% - 1rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.filter-item input,
+.filter-item select {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    width: 100%;
+}
+
+.filter-item input:focus,
+.filter-item select:focus {
+    background-color: #444;
+    border-color: #666;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 768px) {
+    .filter-item {
+        flex-basis: calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-item {
+        flex-basis: 100%;
+    }
+
+    .filter-item input,
+    .filter-item select {
+        padding: 0.5rem;
+        font-size: 0.8em;
+    }
+}

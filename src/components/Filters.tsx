@@ -1,3 +1,4 @@
+import './Filters.css';
 
 interface FiltersProps {
   busca: string;
@@ -17,19 +18,17 @@ export default function Filters({
   setOrderByType,
 }: FiltersProps) {
   return (
-    <div className="row mb-4">
-      <div className="col-md-4 mb-2">
+    <div className="filters">
+      <div className="filter-item">
         <input
           type="text"
-          className="form-control"
           placeholder="Buscar..."
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
         />
       </div>
-      <div className="col-md-4 mb-2">
+      <div className="filter-item">
         <select
-          className="form-select"
           value={linhas.toString()}
           onChange={(e) => setLinhas(Number(e.target.value))}
         >
@@ -38,9 +37,8 @@ export default function Filters({
           ))}
         </select>
       </div>
-      <div className="col-md-4 mb-2">
+      <div className="filter-item">
         <select
-          className="form-select"
           value={orderByType}
           onChange={(e) => {
             const value = e.target.value;
