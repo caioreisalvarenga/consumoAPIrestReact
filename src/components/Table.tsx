@@ -1,4 +1,16 @@
-export default function Table({ viagens }) {
+
+interface Viagem {
+  id: number;
+  origem: string;
+  destino: string;
+  dataCriacao: string;
+}
+
+interface TableProps {
+  viagens: Viagem[];
+}
+
+export default function Table({ viagens }: TableProps) {
   return (
     <table className="table table-bordered">
       <thead className="table-light">
@@ -20,5 +32,5 @@ export default function Table({ viagens }) {
         ))}
       </tbody>
     </table>
-  )
+  );
 }
