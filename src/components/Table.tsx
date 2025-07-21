@@ -30,7 +30,7 @@ export default function Table({ viagens, erro, loading }: TableProps) {
 
   if (erro) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert" role="alert">
         <table className="table table-bordered">
           <tbody>
             <tr>
