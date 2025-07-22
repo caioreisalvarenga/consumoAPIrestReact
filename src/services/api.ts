@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 export interface Viagem {
   id: number;
   origem: string;
@@ -9,7 +8,6 @@ export interface Viagem {
   idMunicipioDestino: number;
   numViagem: string;
 }
-
 interface ViagemResponse {
   data: Viagem[];
   total: number;
