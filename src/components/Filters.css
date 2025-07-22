@@ -1,14 +1,11 @@
 .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .filter-item {
-    flex-basis: calc(33.33% - 1rem);
-    display: flex;
-    flex-direction: column;
+  flex: 1 1 200px;
 }
 
 .filter-item label {
