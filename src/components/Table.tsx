@@ -1,4 +1,3 @@
-// src/components/Table.tsx
 import './Table.css';
 import type { Viagem } from '../services/api';
 interface TableProps {
