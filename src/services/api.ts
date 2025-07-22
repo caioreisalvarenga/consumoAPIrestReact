@@ -26,7 +26,7 @@ export const fetchViagens = async (params: any): Promise<ViagemResponse> => {
   try {
     const response = await API.get('', { params });
 
-    console.log('Resposta da API:', response.data); // útil para debug
+    console.log('Resposta da API:', response.data);
 
     const viagens = response.data?.data?.data || [];
     const total = response.data?.data?.total || 0;
