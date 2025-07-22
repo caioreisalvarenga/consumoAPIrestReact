@@ -1,4 +1,3 @@
-
 interface PaginationProps {
   pagina: number;
   setPagina: (pagina: number | ((prevPagina: number) => number)) => void;
@@ -10,25 +9,40 @@ export default function Pagination({
   setPagina,
   totalPaginas,
 }: PaginationProps) {
+  const irParaAnterior = () => {
+    setPagina((prev) => Math.max(prev - 1, 1));
+  };
+
+  const irParaProxima = () => {
+    setPagina((prev) => Math.min(prev + 1, totalPaginas));
+  };
+
   return (
-    <div className="d-flex justify-content-between align-items-center">
+    <nav
+      className="d-flex justify-content-between align-items-center mt-4"
+      aria-label="Navegação de páginas"
+    >
       <button
-        onClick={() => setPagina((p) => Math.max(p - 1, 1))}
+        onClick={irParaAnterior}
         disabled={pagina === 1}
-        className="btn btn-primary"
+        className="btn btn-outline-primary"
+        aria-label="Página anterior"
       >
-        Anterior
+        ← Anterior
       </button>
-      <span>
+
+      <span className="fw-bold">
         Página {pagina} de {totalPaginas}
       </span>
+
       <button
-        onClick={() => setPagina((p) => Math.min(p + 1, totalPaginas))}
+        onClick={irParaProxima}
         disabled={pagina === totalPaginas}
-        className="btn btn-primary"
+        className="btn btn-outline-primary"
+        aria-label="Próxima página"
       >
-        Próxima
+        Próxima →
       </button>
-    </div>
+    </nav>
   );
 }
