@@ -1,10 +1,11 @@
 import './Table.css';
 
-interface Viagem {
-  id: number;
-  origem: string;
-  destino: string;
+export interface Viagem {
+  id: string;
+  idMunicipioOrigem: string | null;
+  idMunicipioDestino: string | null;
   dataCriacao: string;
+  numViagem: number;
 }
 
 interface TableProps {
@@ -30,14 +31,8 @@ export default function Table({ viagens, erro, loading }: TableProps) {
 
   if (erro) {
     return (
-      <div className="alert" role="alert">
-        <table className="table table-bordered">
-          <tbody>
-            <tr>
-              <td colSpan={4}>{erro}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="alert alert-danger" role="alert">
+        {erro}
       </div>
     );
   }
@@ -58,6 +53,7 @@ export default function Table({ viagens, erro, loading }: TableProps) {
     <table className="table table-bordered">
       <thead className="table-light">
         <tr>
+          <th>#</th>
           <th>ID</th>
           <th>Origem</th>
           <th>Destino</th>
@@ -65,12 +61,13 @@ export default function Table({ viagens, erro, loading }: TableProps) {
         </tr>
       </thead>
       <tbody>
-        {viagens.map((viagem) => (
+        {viagens.map((viagem, _index) => (
           <tr key={viagem.id}>
+            <td>{viagem.numViagem}</td>
             <td>{viagem.id}</td>
-            <td>{viagem.origem}</td>
-            <td>{viagem.destino}</td>
-            <td>{new Date(viagem.dataCriacao).toLocaleString()}</td>
+            <td>{viagem.idMunicipioOrigem ?? "–"}</td>
+            <td>{viagem.idMunicipioDestino ?? "–"}</td>
+            <td>{new Date(viagem.dataCriacao).toLocaleString("pt-BR")}</td>
           </tr>
         ))}
       </tbody>
