@@ -22,11 +22,26 @@ const API = axios.create({
   },
 });
 
-export const fetchViagens = async (params: any): Promise<ViagemResponse> => {
+/**
+ * Função para buscar viagens com filtros, paginação e ordenação
+ * @param params Objeto com os filtros: pagina, linhas, busca, orderBy, orderByType
+ * @param signal AbortSignal para cancelar a requisição se necessário
+ */
+export const fetchViagens = async (
+  params: {
+    pagina: number;
+    linhas: number;
+    busca: string;
+    orderBy: string;
+    orderByType: 'asc' | 'desc';
+  },
+  signal?: AbortSignal
+): Promise<ViagemResponse> => {
   try {
-    const response = await API.get('', { params });
-
-    console.log('Resposta da API:', response.data);
+    const response = await API.get('', {
+      params,
+      signal,
+    });
 
     const viagens = response.data?.data?.data || [];
     const total = response.data?.data?.total || 0;
@@ -35,8 +50,12 @@ export const fetchViagens = async (params: any): Promise<ViagemResponse> => {
       data: viagens,
       total,
     };
-  } catch (err) {
-    console.error('Erro ao buscar viagens:', err);
-    throw err;
+  } catch (error: any) {
+    if (axios.isCancel(error)) {
+      console.warn('Requisição cancelada');
+    } else {
+      console.error('Erro ao buscar viagens:', error);
+    }
+    throw error;
   }
 };

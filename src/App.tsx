@@ -9,39 +9,62 @@ function App() {
     const [pagina, setPagina] = useState(1);
     const [linhas, setLinhas] = useState(10);
     const [busca, setBusca] = useState("");
-    const [orderBy] = useState<"dataCriacao">("dataCriacao");
     const [orderByType, setOrderByType] = useState<"asc" | "desc">("desc");
     const [totalPaginas, setTotalPaginas] = useState(1);
     const [erro, setErro] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const loadData = useCallback(async () => {
-        const params = { pagina, linhas, busca, orderBy, orderByType };
+    // Atualiza a página para 1 ao buscar novo termo
+    useEffect(() => {
+        setPagina(1);
+    }, [busca]);
 
-        try {
-            setLoading(true);
-            const response = await fetchViagens(params);
+    // Atualiza a página para 1 ao mudar quantidade de linhas
+    useEffect(() => {
+        setPagina(1);
+    }, [linhas]);
 
-            if (!response || !Array.isArray(response.data)) {
-                throw new Error("Resposta inválida da API");
-            }
+    const loadData = useCallback(() => {
+        const controller = new AbortController();
+        const params = {
+            pagina,
+            linhas,
+            busca,
+            orderBy: "dataCriacao",
+            orderByType
+        };
 
-            const listaViagens = response.data;
-            const total = response.total || 0;
+        setLoading(true);
 
-            setViagens(listaViagens);
-            setTotalPaginas(Math.ceil(total / linhas));
-            setErro(null);
-        } catch (err) {
-            console.error(err);
-            setErro("Erro ao buscar viagens");
-        } finally {
-            setLoading(false);
-        }
-    }, [pagina, linhas, busca, orderBy, orderByType]);
+        fetchViagens(params, controller.signal)
+            .then((response) => {
+                if (!response || !Array.isArray(response.data)) {
+                    throw new Error("Resposta inválida da API");
+                }
+
+                const listaViagens = response.data;
+                const total = response.total || 0;
+
+                setViagens(listaViagens);
+                setTotalPaginas(Math.max(1, Math.ceil(total / linhas)));
+                setErro(null);
+            })
+            .catch((err) => {
+                if (err.name !== "CanceledError") {
+                    console.error(err);
+                    setErro("Erro ao buscar viagens");
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+
+        return () => controller.abort();
+    }, [pagina, linhas, busca, orderByType]);
 
     useEffect(() => {
-        loadData();
+        const abort = loadData();
+        return abort;
     }, [loadData]);
 
     return (

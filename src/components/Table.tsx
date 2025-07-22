@@ -41,6 +41,8 @@ export default function Table({ viagens, erro, loading }: TableProps) {
     );
   }
 
+  const viagensOrdenadas = [...viagens].sort((a, b) => a.id - b.id);
+
   return (
     <table className="table table-bordered">
       <thead className="table-light">
@@ -53,7 +55,7 @@ export default function Table({ viagens, erro, loading }: TableProps) {
         </tr>
       </thead>
       <tbody>
-        {viagens.map((viagem) => (
+        {viagensOrdenadas.map((viagem) => (
           <tr key={viagem.id}>
             <td>{viagem.numViagem}</td>
             <td>{viagem.id}</td>
