@@ -20,14 +20,17 @@ function App() {
 
         try {
             setLoading(true);
-            const data = await fetchViagens(params);
+            const response = await fetchViagens(params);
 
-            if (!data || !Array.isArray(data.data)) {
+            if (!response || !Array.isArray(response.data?.data)) {
                 throw new Error("Resposta inválida da API");
             }
 
-            setViagens(data.data);
-            setTotalPaginas(data.totalPaginas ?? 1);
+            const listaViagens = response.data.data;
+            const total = response.data.total || 0;
+
+            setViagens(listaViagens);
+            setTotalPaginas(Math.ceil(total / linhas));
             setErro(null);
         } catch (err) {
             console.error(err);
