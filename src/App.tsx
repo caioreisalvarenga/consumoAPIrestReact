@@ -22,12 +22,12 @@ function App() {
             setLoading(true);
             const response = await fetchViagens(params);
 
-            if (!response || !Array.isArray(response.data?.data)) {
+            if (!response || !Array.isArray(response.data)) {
                 throw new Error("Resposta inválida da API");
             }
 
-            const listaViagens = response.data.data;
-            const total = response.data.total || 0;
+            const listaViagens = response.data;
+            const total = response.total || 0;
 
             setViagens(listaViagens);
             setTotalPaginas(Math.ceil(total / linhas));

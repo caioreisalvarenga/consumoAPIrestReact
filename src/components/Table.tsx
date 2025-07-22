@@ -1,13 +1,6 @@
+// src/components/Table.tsx
 import './Table.css';
-
-export interface Viagem {
-  id: string;
-  idMunicipioOrigem: string | null;
-  idMunicipioDestino: string | null;
-  dataCriacao: string;
-  numViagem: number;
-}
-
+import type { Viagem } from '../services/api';
 interface TableProps {
   viagens: Viagem[];
   erro: string | null;
@@ -21,7 +14,7 @@ export default function Table({ viagens, erro, loading }: TableProps) {
         <table className="table table-bordered">
           <tbody>
             <tr>
-              <td colSpan={4}>Carregando...</td>
+              <td colSpan={5}>Carregando...</td>
             </tr>
           </tbody>
         </table>
@@ -42,7 +35,7 @@ export default function Table({ viagens, erro, loading }: TableProps) {
       <table className="table table-bordered">
         <tbody>
           <tr>
-            <td colSpan={4}>Nenhuma viagem encontrada</td>
+            <td colSpan={5}>Nenhuma viagem encontrada</td>
           </tr>
         </tbody>
       </table>
@@ -61,7 +54,7 @@ export default function Table({ viagens, erro, loading }: TableProps) {
         </tr>
       </thead>
       <tbody>
-        {viagens.map((viagem, _index) => (
+        {viagens.map((viagem) => (
           <tr key={viagem.id}>
             <td>{viagem.numViagem}</td>
             <td>{viagem.id}</td>

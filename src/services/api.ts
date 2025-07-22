@@ -1,10 +1,15 @@
 import axios from 'axios';
+
 export interface Viagem {
   id: number;
   origem: string;
   destino: string;
   dataCriacao: string;
+  idMunicipioOrigem: number;
+  idMunicipioDestino: number;
+  numViagem: string;
 }
+
 interface ViagemResponse {
   data: Viagem[];
   total: number;
@@ -23,9 +28,14 @@ export const fetchViagens = async (params: any): Promise<ViagemResponse> => {
   try {
     const response = await API.get('', { params });
 
+    console.log('Resposta da API:', response.data); // útil para debug
+
+    const viagens = response.data?.data?.data || [];
+    const total = response.data?.data?.total || 0;
+
     return {
-      data: response.data?.data || [],
-      total: response.data?.total || 0,
+      data: viagens,
+      total,
     };
   } catch (err) {
     console.error('Erro ao buscar viagens:', err);
