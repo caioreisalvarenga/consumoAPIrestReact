@@ -1,5 +1,4 @@
 import './Filters.css';
-
 interface FiltersProps {
   busca: string;
   setBusca: (value: string) => void;
@@ -18,33 +17,44 @@ export default function Filters({
   setOrderByType,
 }: FiltersProps) {
   return (
-    <div className="filters">
+    <div className="filters d-flex gap-3 flex-wrap mb-4">
       <div className="filter-item">
+        <label htmlFor="busca" className="form-label">Buscar</label>
         <input
+          id="busca"
           type="text"
-          placeholder="Buscar..."
+          className="form-control"
+          placeholder="Buscar por ID ou número da viagem..."
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
         />
       </div>
+
       <div className="filter-item">
+        <label htmlFor="linhas" className="form-label">Linhas por página</label>
         <select
-          value={linhas.toString()}
+          id="linhas"
+          className="form-select"
+          value={linhas}
           onChange={(e) => setLinhas(Number(e.target.value))}
         >
           {[5, 10, 20, 50].map((num) => (
-            <option key={num} value={num.toString()}>{num} por página</option>
+            <option key={num} value={num}>
+              {num} por página
+            </option>
           ))}
         </select>
       </div>
+
       <div className="filter-item">
+        <label htmlFor="ordenacao" className="form-label">Ordenar por</label>
         <select
+          id="ordenacao"
+          className="form-select"
           value={orderByType}
           onChange={(e) => {
-            const value = e.target.value;
-            if (value === 'asc' || value === 'desc') {
-              setOrderByType(value);
-            }
+            const value = e.target.value as 'asc' | 'desc';
+            setOrderByType(value);
           }}
         >
           <option value="asc">Mais antigo</option>
